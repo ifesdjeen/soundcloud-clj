@@ -6,8 +6,6 @@
 
 (def ^:const throw-exceptions false)
 
-(def ^:const per-page 10)
-
 (defn POST
   [^String uri &{ :keys [body] :as options }]
   (io! (json/read-json
@@ -39,4 +37,3 @@
   ([^String uri &{ :keys [body] :as options }]
      (io! (json/read-json
            (:body (http/delete uri (merge options { :accept :json :body (json/json-str body) :throw-exceptions throw-exceptions })))))))
-

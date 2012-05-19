@@ -9,6 +9,8 @@
   []
   *endpoint*)
 
+(def ^:const per-page 10)
+
 (defn set-endpoint!
   "Alters default SoundCloud connection endpoint"
   [uri client-id client-secret]

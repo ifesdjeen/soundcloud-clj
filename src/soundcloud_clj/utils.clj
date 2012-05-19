@@ -1,6 +1,7 @@
 (ns soundcloud-clj.utils
   (:refer-clojure)
-  (:require clojure.string))
+  (:require [clojure.string]
+            [soundcloud-clj.config   :as config]))
 
 ;;
 ;; Transformations
@@ -14,6 +15,23 @@
 (defn discard-nils
   [map]
   (apply dissoc map (for [[k v] map :when (nil? v)] k)))
+
+(defn paginate
+  [options]
+  (if-let [page (:page options)]
+    (merge (dissoc options :page) {:limit config/per-page :offset (* (- page 1) config/per-page) })
+    (paginate (merge options {:page 1}))))
+
+(defn add-client-id
+  [options]
+  (merge options { :client_id (:client-id (config/endpoint)) }))
+
+(defn transform-query-params
+  [query-params]
+  (-> query-params
+      discard-nils
+      paginate
+      add-client-id))
 
 (defprotocol Transform
   (dasherize [object] "")

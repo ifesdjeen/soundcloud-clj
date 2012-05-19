@@ -1,6 +1,7 @@
 (ns soundcloud-clj.utils-test
   (:use clojure.test
-        soundcloud-clj.utils))
+        soundcloud-clj.utils)
+  (:require [soundcloud-clj.config :as config]))
 
 (deftest dasherize-test
   (testing "Dasherize for string value"
@@ -24,3 +25,21 @@
 (deftest discard-nils-test
   (testing "Discards nils"
     (is (= {:b "b-value" :d "d-value"} (discard-nils {:a nil :b "b-value" :c nil :d "d-value"})))))
+
+(deftest paginate-test
+  (testing "Adds pagination params when page option is given"
+    (is (= {:offset 20 :limit 10 :other-option "other-value"} (paginate {:page 3 :other-option "other-value"}))))
+  (testing "Adds first page as a default when page option is given"
+    (is (= {:offset 0 :limit 10 :other-option "other-value"} (paginate {:other-option "other-value"})))))
+
+(deftest add-client-id-test
+  (testing "Adds client_id to hash"
+    (is (= {:client_id (:client-id config/endpoint)} (add-client-id {})))))
+
+(deftest transform-query-params-test
+  (testing "Transforms params"
+    (is (= {:client_id (:client-id config/endpoint)
+            :offset 20
+            :limit 10
+            :other-option "other-value"}
+           (transform-query-params {:page 3 :other-option "other-value" :q nil})))))

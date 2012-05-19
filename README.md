@@ -20,26 +20,47 @@ Next, set API endpoint:
 (ns my-awesome-app.core
   (:require [soundcloud-clj.config :as config]))
 
-(def ^:const client-id (get (System/getenv) "CLIENT_ID"))
-(def ^:const client-secret (get (System/getenv) "CLIENT_SECRET"))
-(def ^:const base-uri  "http://api.sandbox-soundcloud.com")
-
 (config/set-endpoint! "http://api.sandbox-soundcloud.com" "YOUR_CLIENT_KEY" "YOUR_CLIENT_SECRET")
 ```
 
 ### Basic operations on users:
 
-Get list of users:
+Get list of users (will return first page of all the page results):
 
 ```clojure
 (users/get-users)
 ```
 
+Get the second page of all existing users:
+
+```clojure
+(users/get-users :page 2)
+```
+
 Get user with id 3423:
 
 ```clojure
-(users/get-users 3423)
+(users/get-user 3423)
 ```
+
+Search for the user, that'd match 'ifesdjeen'
+
+```clojure
+(users/get-users :q "ifesdjeen") ;; in case lots of results are returned, you can always paginate by adding :page <page_number> param.
+```
+
+List tracks/followings/followers/playlists for user with id 3207:
+
+```clojure
+(users/get-user-tracks 3207)
+(users/get-user-playlists 3207)
+(users/get-user-followings 3207)
+(users/get-user-followers 3207)
+
+;; and with pagination:
+(users/get-user-tracks 3207 :page 2) ;; etc...
+```
+
 
 ## Running tests
 
