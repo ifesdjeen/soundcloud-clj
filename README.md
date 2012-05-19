@@ -57,6 +57,8 @@ CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> lein2 test :networ
 
 ## License
 
-Copyright © 2012 FIXME
+Copyright © 2012 Alex P
 
-Distributed under the Eclipse Public License, the same as Clojure.
+This library is distributed under the Eclipse Public License, the same as Clojure.
+
+Soundcloud as a Trademark and API itself, belong to their respective owners.
