@@ -1,14 +1,10 @@
 (ns soundcloud-clj.urls-test
-  (:use clojure.test  soundcloud-clj.utils)
-  (:require [soundcloud-clj.urls :as urls]
-            [soundcloud-clj.config :as config]
-            ))
+  (:use clojure.test
+        soundcloud-clj.utils
+        soundcloud-clj.test-helper)
+  (:require [soundcloud-clj.urls :as urls]))
 
-(def ^:const client-id (get (System/getenv) "CLIENT_ID"))
-(def ^:const client-secret (get (System/getenv) "CLIENT_SECRET"))
-(def ^:const base-uri  "http://api.sandbox-soundcloud.com")
-
-(config/set-endpoint! base-uri client-id client-secret)
+(initialize-endpoint!)
 
 (deftest users-url-test
   (testing "Users URL"
@@ -42,3 +38,36 @@
     (is (= "http://api.sandbox-soundcloud.com/users/3464/groups.json" (urls/user-groups 3464))))
   (testing "User Web-Profiles URL"
     (is (= "http://api.sandbox-soundcloud.com/users/3464/web-profiles.json" (urls/user-web-profiles 3464)))))
+
+
+
+(deftest my-urls-test
+  (testing "User URL"
+    (is (= "https://api.sandbox-soundcloud.com/me.json" (urls/me))))
+
+  (testing "User Tracks URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/tracks.json" (urls/my-tracks))))
+
+  (testing "User Playlists URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/playlists.json" (urls/my-playlists))))
+
+  (testing "User Followings URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/followings.json" (urls/my-followings)))
+    (is (= "https://api.sandbox-soundcloud.com/me/followings/3232.json" (urls/my-followings 3232))))
+
+  (testing "User Followers URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/followers.json" (urls/my-followers)))
+    (is (= "https://api.sandbox-soundcloud.com/me/followers/3232.json" (urls/my-followers 3232))))
+
+  (testing "User Comments URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/comments.json" (urls/my-comments))))
+
+  (testing "User Favorites URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/favorites.json" (urls/my-favorites)))
+    (is (= "https://api.sandbox-soundcloud.com/me/favorites/3232.json" (urls/my-favorites 3232))))
+
+  (testing "User Groups URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/groups.json" (urls/my-groups))))
+
+  (testing "User Web-Profiles URL"
+    (is (= "https://api.sandbox-soundcloud.com/me/web-profiles.json" (urls/my-web-profiles)))))

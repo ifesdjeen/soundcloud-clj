@@ -1,16 +1,13 @@
 (ns soundcloud-clj.users-test
-  (:use clojure.test  soundcloud-clj.utils)
-  (:require [soundcloud-clj.users :as users]
-            [soundcloud-clj.config :as config]))
+  (:use clojure.test
+        soundcloud-clj.test-helper)
+  (:require [soundcloud-clj.users :as users]))
 
-(def ^:const client-id (get (System/getenv) "CLIENT_ID"))
-(def ^:const client-secret (get (System/getenv) "CLIENT_SECRET"))
-(def ^:const base-uri  "http://api.sandbox-soundcloud.com")
+(initialize-endpoint!)
 
 (def ^:const user-fields [ :id :kind :permalink :username :uri :permalink-url :avatar-url :country :full-name :city :description :discogs-name :myspace-name :website :website-title :online :track-count :playlist-count :followers-count :followings-count :public-favorites-count :avatar-data])
-(def ^:const track-fields [ :license :artwork-url :duration :release-year :label-id :kind :state :sharing :user-id :playback-count :label-name :waveform-url :bpm :purchase-title :permalink-url :download-count :downloadable :isrc :favoritings-count :streamable :title :uri :release-day :permalink :genre :original-content-size :video-url :release-month :release :commentable :created-at :user :comment-count :key-signature :purchase-url :stream-url :attachments-uri :id :track-type :tag-list :description :original-format ])
 
-(config/set-endpoint! base-uri client-id client-secret)
+(def ^:const track-fields [ :license :artwork-url :duration :release-year :label-id :kind :state :sharing :user-id :playback-count :label-name :waveform-url :bpm :purchase-title :permalink-url :download-count :downloadable :isrc :favoritings-count :streamable :title :uri :release-day :permalink :genre :original-content-size :video-url :release-month :release :commentable :created-at :user :comment-count :key-signature :purchase-url :stream-url :attachments-uri :id :track-type :tag-list :description :original-format ])
 
 (deftest ^{ :network-bound true } get-users-test
   (testing "Get users API request"

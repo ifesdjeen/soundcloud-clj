@@ -26,12 +26,21 @@
   [options]
   (merge options { :client_id (:client-id (config/endpoint)) }))
 
+(defn add-oauth-token
+  [options oauth-token]
+  (merge options { :oauth_token oauth-token }))
+
 (defn transform-query-params
-  [query-params]
-  (-> query-params
-      discard-nils
-      paginate
-      add-client-id))
+  ([query-params]
+     (-> query-params
+         discard-nils
+         paginate
+         add-client-id))
+  ([query-params oauth-token]
+     (-> query-params
+         discard-nils
+         paginate
+         (add-oauth-token oauth-token))))
 
 (defprotocol Transform
   (dasherize [object] "")

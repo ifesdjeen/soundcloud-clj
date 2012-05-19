@@ -2,6 +2,7 @@
   (:require [soundcloud-clj.config   :as config]))
 
 (def ^:const ^:private users-endpoint "users")
+(def ^:const ^:private me-endpoint "me")
 (def ^:const ^:private tracks-endpoint "tracks")
 (def ^:const ^:private playlists-endpoint "playlists")
 (def ^:const ^:private followings-endpoint "followings")
@@ -15,18 +16,20 @@
   []
   (:uri (config/endpoint)))
 
+(defn secure-base
+  []
+  (:secure-uri (config/endpoint)))
+
 (def ^:const slash "/")
 (def ^:const dotjson ".json")
 
 ;;
 ;; Users
 ;;
+;; http://developers.soundcloud.com/docs/api/users
+;;
 
 (defn users
-  "API endpoint for getting the list of users:
-
-    http://developers.soundcloud.com/docs/api/users
-  "
   ([]
      (str (base) slash users-endpoint dotjson))
   ([user-id]
@@ -69,3 +72,53 @@
 (defn user-web-profiles
   [user-id]
   (str (base) slash users-endpoint slash user-id slash web-profiles-endpoint dotjson))
+
+
+;;
+;; Me
+;;
+;; http://developers.soundcloud.com/docs/api/me
+;;
+
+(defn me
+  ([]
+     (str (secure-base) slash me-endpoint dotjson)))
+
+(defn my-tracks
+  []
+  (str (secure-base) slash me-endpoint slash tracks-endpoint dotjson))
+
+(defn my-playlists
+  []
+  (str (secure-base) slash me-endpoint slash playlists-endpoint dotjson))
+
+(defn my-followings
+  ([]
+     (str (secure-base) slash me-endpoint slash followings-endpoint dotjson))
+  ([ following-id]
+     (str (secure-base) slash me-endpoint slash followings-endpoint slash following-id dotjson)))
+
+(defn my-followers
+  ([]
+     (str (secure-base) slash me-endpoint slash followers-endpoint dotjson))
+  ([follower-id]
+     (str (secure-base) slash me-endpoint slash followers-endpoint slash follower-id dotjson)))
+
+(defn my-comments
+  []
+  (str (secure-base) slash me-endpoint slash comments-endpoint dotjson))
+
+(defn my-favorites
+  ([]
+     (str (secure-base) slash me-endpoint slash favorites-endpoint dotjson))
+  ([ favorite-id]
+     (str (secure-base) slash me-endpoint slash favorites-endpoint slash favorite-id dotjson)))
+
+(defn my-groups
+  []
+  (str (secure-base) slash me-endpoint slash groups-endpoint dotjson))
+
+(defn my-web-profiles
+  []
+  (str (secure-base) slash me-endpoint slash web-profiles-endpoint dotjson))
+

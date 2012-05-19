@@ -1,7 +1,7 @@
 (ns soundcloud-clj.utils-test
   (:use clojure.test
-        soundcloud-clj.utils)
-  (:require [soundcloud-clj.config :as config]))
+        soundcloud-clj.test-helper
+        soundcloud-clj.utils))
 
 (deftest dasherize-test
   (testing "Dasherize for string value"
@@ -34,12 +34,19 @@
 
 (deftest add-client-id-test
   (testing "Adds client_id to hash"
-    (is (= {:client_id (:client-id config/endpoint)} (add-client-id {})))))
+    (is (= {:client_id client-id} (add-client-id {})))))
 
 (deftest transform-query-params-test
   (testing "Transforms params"
-    (is (= {:client_id (:client-id config/endpoint)
+    (is (= {:client_id client-id
             :offset 20
             :limit 10
             :other-option "other-value"}
-           (transform-query-params {:page 3 :other-option "other-value" :q nil})))))
+           (transform-query-params {:page 3 :other-option "other-value" :q nil}))))
+
+  (testing "Transforms params"
+    (is (= {:oauth_token oauth-token
+            :offset 20
+            :limit 10
+            :other-option "other-value"}
+           (transform-query-params {:page 3 :other-option "other-value" :q nil} oauth-token)))))

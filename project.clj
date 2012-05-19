@@ -8,5 +8,5 @@
                  [org.clojure/data.json "0.1.2"]]
   :test-selectors {:default (fn [v] (not (:network-bound v)))
                    :all            (constantly true)
-                   :network-bound  :network-bound}
-  )
+                   :network-bound  :network-bound
+                   :focus          :focus})
