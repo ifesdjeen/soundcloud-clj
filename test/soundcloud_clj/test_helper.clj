@@ -12,3 +12,11 @@
 (defn initialize-endpoint!
   []
   (config/set-endpoint! base-uri base-secure-uri client-id client-secret))
+
+(def ^:const user-fields [ :id :kind :permalink :username :uri :permalink-url :avatar-url :country :full-name :city :description :discogs-name :myspace-name :website :website-title :online :track-count :playlist-count :followers-count :followings-count :public-favorites-count :avatar-data])
+
+(def ^:const track-fields [ :license :artwork-url :duration :release-year :label-id :kind :state :sharing :user-id :playback-count :label-name :waveform-url :bpm :purchase-title :permalink-url :download-count :downloadable :isrc :favoritings-count :streamable :title :uri :release-day :permalink :genre :original-content-size :video-url :release-month :release :commentable :created-at :user :comment-count :key-signature :purchase-url :stream-url :attachments-uri :id :track-type :tag-list :description :original-format ])
+
+(def ^:const me-fields [ :country :private-tracks-count :plan :kind :avatar-url :discogs-name :track-count :permalink-url :full-name :public-favorites-count :private-playlists-count :uri :city :username :permalink :followers-count :playlist-count :online :myspace-name :followings-count :primary-email-confirmed :id :website :website-title :description])
+
+(def ^:const my-track-fields [ :license :artwork-url :download-url :duration :release-year :downloads-remaining :label-id :kind :state :sharing :user-id :playback-count :user-favorite :label-name :waveform-url :bpm :purchase-title :permalink-url :download-count :downloadable :isrc :favoritings-count :streamable :title :uri :release-day :permalink :genre :secret-token :original-content-size :video-url :release-month :release :commentable :user-playback-count :created-at :user :comment-count :key-signature :purchase-url :stream-url :attachments-uri :secret-uri :id :track-type :tag-list :description :original-format ])

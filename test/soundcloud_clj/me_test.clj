@@ -4,11 +4,30 @@
   (:require [soundcloud-clj.me :as me]
             [soundcloud-clj.config :as config]))
 
-(def ^:const me-fields [ :country :private-tracks-count :plan :kind :avatar-url :discogs-name :track-count :permalink-url :full-name :public-favorites-count :private-playlists-count :uri :city :username :permalink :followers-count :playlist-count :online :myspace-name :followings-count :primary-email-confirmed :id :website :website-title :description])
+;;
+;; These tests are, of course, only relevant to me :/
+;;
 
-(deftest ^{ :network-bound true :focus true } get-me-test
-  (testing "Get users API request"
-    (let [me          (me/get-me oauth-token)]
+(deftest ^{ :network-bound true } me-test
+  (testing "Get /me API request"
+    (let [me          (me/me oauth-token)]
       (doseq [field (keys me)]
         (is (some #(= field %) me-fields))))))
 
+
+(deftest ^{ :network-bound true } my-tracks-test
+  (testing "Get my-tracks API request"
+    (let [my-tracks       (me/my-tracks oauth-token)
+          track           (first my-tracks)]
+      (doseq [field (keys track)]
+        (is (some #(= field %) my-track-fields))))))
+
+(deftest ^{ :network-bound true } followings-test
+  (testing "Get my-tracks API request"
+    (let [user-id 1888239]
+      (me/unfollow-user user-id oauth-token)
+      (is (= 0 (count (me/my-followings oauth-token))))
+      (me/follow-user user-id oauth-token)
+      (is (= 1 (count (me/my-followings oauth-token))))
+      (me/unfollow-user user-id oauth-token)
+      (is (= 0 (count (me/my-followings oauth-token)))))))
