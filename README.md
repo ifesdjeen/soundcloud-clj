@@ -61,6 +61,40 @@ List tracks/followings/followers/playlists for user with id 3207:
 (users/get-user-tracks 3207 :page 2) ;; etc...
 ```
 
+### Basic operations on /me
+
+These operations are possible _only_ with an OAuth token.
+For now, it has to be passed on every function call, as when building a web application
+that handles many users at a time, these calls have to be completely isolated and based
+on current user session rather than general API configuration. Of course, this is less
+relevant for standalone or single user apps, but for that case it's quite easy to write
+a small wrapper for all these functions.
+
+Include/require ns:
+
+```clojure
+(ns soundcloud-clj.me-test
+  (:require [soundcloud-clj.me :as me]))
+```
+
+Getting my info:
+
+```clojure
+(me/me oauth-token)
+```
+
+Getting my tracks:
+
+```clojure
+(me/my-tracks oauth-token)
+```
+
+Follow, unfollow and get followings:
+```clojure
+(me/follow-user user-id oauth-token)
+(me/unfollow-user user-id oauth-token)
+(me/my-followings oauth-token)
+```
 
 ## Running tests
 
@@ -73,7 +107,7 @@ lein2 test
 In order to run tests that are hitting API endpoint, run:
 
 ```
-CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> lein2 test :network-bound
+OAUTH_TOKEN=<YOUR_OAUTH_ID> CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> lein2 test :network-bound
 ```
 
 ## License
