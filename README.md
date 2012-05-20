@@ -7,7 +7,8 @@ __Why HTTP requests were not mocked?__ client should guarantee consistency as mu
 As there's no way to choose which version of API endpoint is used, it's better to see that tests
 have failed rather than mock everything and be happy they pass, but things do not work in reality.
 Nowadays most of people have a good bandwith, and for tests you use your own API key, so library
-developers won't get banned for you :)
+developers won't get banned for you :) _(actually, I've started an experiment with clj-http-fake,
+let's see how it goes. I still don't think that's very representative, but will give it a shot)_
 
 ## Usage
 
@@ -109,6 +110,10 @@ In order to run tests that are hitting API endpoint, run:
 ```
 OAUTH_TOKEN=<YOUR_OAUTH_ID> CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> lein2 test :network-bound
 ```
+
+__WARNING__: right now, we rely on unreleased version [clj-http-fake](https://github.com/myfreeweb/clj-http-fake),
+and there is a pull request that was merged but not yet released. That means that in case you want to run
+tests, use [Leiningen Checkouts](https://github.com/technomancy/leiningen#faq).
 
 ## License
 
