@@ -13,7 +13,7 @@
 (defn get-user
   [user-id]
   (transform-response
-   (rest/GET (urls/users user-id) :query-params (transform-query-params {}))))
+   (rest/GET (urls/users user-id) :query-params (transform-query-params {:paginate false}))))
 
 (defn get-user-tracks
   [user-id &{:keys [q page] :as options}]

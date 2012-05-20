@@ -24,7 +24,9 @@
   [options]
   (if-let [page (:page options)]
     (merge (dissoc options :page) {:limit config/per-page :offset (* (- page 1) config/per-page) })
-    (paginate (merge options {:page 1}))))
+    (if (= false (:paginate options))
+      options
+      (paginate (merge options {:page 1})))))
 
 (defn add-client-id
   [options]
