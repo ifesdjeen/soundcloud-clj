@@ -1,0 +1,3 @@
+language: clojure
+lein: lein2
+script: OAUTH_TOKEN=a CLIENT_ID=b CLIENT_SECRET=c lein2 test
