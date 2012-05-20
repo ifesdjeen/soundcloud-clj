@@ -1,5 +1,7 @@
 # Soundcloud Clojure API wrapper
 
+[![Build Status](https://secure.travis-ci.org/ifesdjeen/soundcloud-clj.png?branch=master)](http://travis-ci.org/ifesdjeen/soundcloud-clj)
+
 This is a very Clojure wrapper for [Soundcloud API](http://developers.soundcloud.com/docs/api).
 Want to hack a Soundcloud-based app in Clojure? Most likely that'd be a good use for you.
 
