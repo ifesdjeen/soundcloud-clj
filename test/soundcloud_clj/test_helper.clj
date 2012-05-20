@@ -1,5 +1,6 @@
 (ns soundcloud-clj.test-helper
-  (:require [soundcloud-clj.config :as config]))
+  (:require [clojure.java.io       :as io]
+            [soundcloud-clj.config :as config]))
 
 
 (def ^:const client-id (get (System/getenv) "CLIENT_ID"))
@@ -20,3 +21,13 @@
 (def ^:const me-fields [ :country :private-tracks-count :plan :kind :avatar-url :discogs-name :track-count :permalink-url :full-name :public-favorites-count :private-playlists-count :uri :city :username :permalink :followers-count :playlist-count :online :myspace-name :followings-count :primary-email-confirmed :id :website :website-title :description])
 
 (def ^:const my-track-fields [ :license :artwork-url :download-url :duration :release-year :downloads-remaining :label-id :kind :state :sharing :user-id :playback-count :user-favorite :label-name :waveform-url :bpm :purchase-title :permalink-url :download-count :downloadable :isrc :favoritings-count :streamable :title :uri :release-day :permalink :genre :secret-token :original-content-size :video-url :release-month :release :commentable :user-playback-count :created-at :user :comment-count :key-signature :purchase-url :stream-url :attachments-uri :secret-uri :id :track-type :tag-list :description :original-format ])
+
+(def ^:const fake-routes
+  { (format "http://api.sandbox-soundcloud.com/users.json?client_id=%s&offset=0&limit=10" client-id)
+    (fn [request] {:status 200 :headers {:content-type "application/json"}
+                   :body (slurp (io/resource (str "api/users.json"))) })
+
+    (format "http://api.sandbox-soundcloud.com/users.json?offset=10&client_id=%s&limit=10" client-id)
+    (fn [request] {:status 200 :headers {:content-type "application/json"}
+                   :body (slurp (io/resource (str "api/users_page_2.json"))) })
+  })

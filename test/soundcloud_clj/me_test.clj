@@ -22,7 +22,7 @@
       (doseq [field (keys track)]
         (is (some #(= field %) my-track-fields))))))
 
-(deftest ^{ :network-bound true :focus true } followings-test
+(deftest ^{ :network-bound true } followings-test
   (testing "Get my-tracks API request"
     (let [user-id 1888239]
       (me/unfollow-user user-id oauth-token)

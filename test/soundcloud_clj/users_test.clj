@@ -1,6 +1,7 @@
 (ns soundcloud-clj.users-test
   (:use clojure.test
-        soundcloud-clj.test-helper)
+        soundcloud-clj.test-helper
+        clj-http.fake)
   (:require [soundcloud-clj.users :as users]))
 
 (initialize-endpoint!)
@@ -53,3 +54,16 @@
       (is (= 10 (count followers)))
       (doseq [field (keys following)]
         (is (some #(= field %) user-fields))))))
+
+
+(deftest ^{ :fake-api true :focus true } get-users-2-test
+  (testing "Get users API request"
+    (with-fake-routes-in-isolation   fake-routes
+      (let [first-page-response      (users/get-users)
+            second-page-response     (users/get-users :page 2)
+            response-item            (first first-page-response)]
+        (is (= 10 (count first-page-response)))
+        (is (= 10 (count second-page-response)))
+        (is (not (= (first first-page-response) (first second-page-response))))
+        (doseq [field (keys response-item)]
+          (is (some #(= field %) user-fields)))))))
