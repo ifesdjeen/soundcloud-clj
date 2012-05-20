@@ -1,7 +1,8 @@
 (ns soundcloud-clj.utils
   (:refer-clojure)
   (:require [clojure.string]
-            [soundcloud-clj.config   :as config]))
+            [clojure.data.json     :as json]
+            [soundcloud-clj.config :as config]))
 
 ;;
 ;; Transformations
@@ -16,6 +17,9 @@
   [map]
   (apply dissoc map (for [[k v] map :when (nil? v)] k)))
 
+;;
+;; Request transformations
+;;
 (defn paginate
   [options]
   (if-let [page (:page options)]
@@ -41,6 +45,10 @@
          discard-nils
          paginate
          (add-oauth-token oauth-token))))
+
+;;
+;; Map/vector/string/keyword transformations
+;;
 
 (defprotocol Transform
   (dasherize [object] "")
@@ -116,4 +124,14 @@
   (<= 500 (:status response) 599))
 
 
+;;
+;; Response operations
+;;
 
+(defn transform-response
+  [response]
+  (if (success? response)
+    (-> (:body response)
+        json/read-json
+        dasherize)
+    (merge (json/read-json (:body response)) (select-keys response [:status]))))

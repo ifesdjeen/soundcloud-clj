@@ -1,26 +1,46 @@
 (ns soundcloud-clj.me
   (:refer-clojure :exclude [get])
+  (:use     [soundcloud-clj.utils])
   (:require [soundcloud-clj.rest :as rest]
             [soundcloud-clj.urls :as urls]
-            [soundcloud-clj.utils :as utils]
             [soundcloud-clj.config :as config]))
 
 (defn me
   [oauth-token]
-  (rest/GET (urls/me) :query-params (utils/transform-query-params {} oauth-token)))
+  (transform-response
+   (rest/GET (urls/me) :query-params (transform-query-params {} oauth-token))))
 
 (defn my-tracks
   [oauth-token]
-  (rest/GET (urls/my-tracks) :query-params (utils/transform-query-params {} oauth-token)))
+  (transform-response
+   (rest/GET (urls/my-tracks) :query-params (transform-query-params {} oauth-token))))
+
+(defn following?
+  [user-id oauth-token]
+  (success?
+   (rest/GET (urls/my-followings user-id) :query-params (transform-query-params {} oauth-token))))
 
 (defn my-followings
   [oauth-token]
-  (rest/GET (urls/my-followings) :query-params (utils/transform-query-params {} oauth-token)))
+  (transform-response
+   (rest/GET (urls/my-followings) :query-params (transform-query-params {} oauth-token))))
+
+(defn my-following
+  [user-id oauth-token]
+  (transform-response
+   (rest/GET (urls/my-followings user-id) :query-params (transform-query-params {} oauth-token))))
+
+(defn my-followings
+  [oauth-token]
+  (transform-response
+   (rest/GET (urls/my-followings) :query-params (transform-query-params {} oauth-token))))
 
 (defn follow-user
   [user-id oauth-token]
-  (rest/PUT (urls/my-followings user-id) :query-params (utils/transform-query-params {} oauth-token)))
+  (transform-response
+   (rest/PUT (urls/my-followings user-id) :query-params (transform-query-params {} oauth-token))))
 
 (defn unfollow-user
   [user-id oauth-token]
-  (rest/DELETE (urls/my-followings user-id) :query-params (utils/transform-query-params {} oauth-token)))
+  (transform-response
+   (rest/DELETE (urls/my-followings user-id) :query-params (transform-query-params {} oauth-token))))
