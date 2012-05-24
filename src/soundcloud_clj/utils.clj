@@ -1,5 +1,6 @@
 (ns soundcloud-clj.utils
   (:refer-clojure)
+  (:use [clj-http.client :only [success?]])
   (:require [clojure.string]
             [clojure.data.json     :as json]
             [soundcloud-clj.config :as config]))
@@ -95,36 +96,6 @@
     (map #(dasherize %) v))
   (underscore [v]
     (map #(underscore %) v)))
-
-;;
-;; HTTP Statuses
-;;
-
-(defn success?
-  [response]
-  (<= 200 (:status response) 299))
-
-(defn missing?
-  [response]
-  (= (:status response) 404))
-
-(defn conflict?
-  [response]
-  (= (:status response) 409))
-
-
-(defn redirect?
-  [response]
-  (<= 300 (:status response) 399))
-
-(defn client-error?
-  [response]
-  (<= 400 (:status response) 499))
-
-(defn server-error?
-  [response]
-  (<= 500 (:status response) 599))
-
 
 ;;
 ;; Response operations

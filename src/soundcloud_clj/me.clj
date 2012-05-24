@@ -1,6 +1,8 @@
 (ns soundcloud-clj.me
   (:refer-clojure :exclude [get])
-  (:use     [soundcloud-clj.utils])
+  (:use     [soundcloud-clj.utils]
+            [clj-http.client :only [success?]])
+
   (:require [soundcloud-clj.rest :as rest]
             [soundcloud-clj.urls :as urls]
             [soundcloud-clj.config :as config]))
