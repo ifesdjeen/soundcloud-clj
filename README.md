@@ -5,6 +5,10 @@
 This is a very Clojure wrapper for [Soundcloud API](http://developers.soundcloud.com/docs/api).
 Want to hack a Soundcloud-based app in Clojure? Most likely that'd be a good use for you.
 
+I've talked to Soundcloud representative, and she said that there is no interest within Soundcloud
+to use, promote, adopt or distribute this library. So consider it abandoned. I'll still use it for
+testing VCR-clj, but I dont think I will continue development.
+
 __Why HTTP requests were not mocked?__ client should guarantee consistency as much as it's possible.
 As there's no way to choose which version of API endpoint is used, it's better to see that tests
 have failed rather than mock everything and be happy they pass, but things do not work in reality.
